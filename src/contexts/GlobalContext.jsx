@@ -26,5 +26,5 @@ function GlobalProvider({ children }) {
   );
 }
 
-// Esportazione del contesto e del provider
+// Export del contesto e del provider
 export { GlobalContext, GlobalProvider };

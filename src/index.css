@@ -1,3 +1,7 @@
+/* ==============================
+   🎨 STILE GENERALE DELL’APP
+   ============================== */
+
 /* Reset base */
 * {
     margin: 0;
@@ -6,13 +10,18 @@
     font-family: "Inter", system-ui, -apple-system, sans-serif;
 }
 
+/* Stile di base della pagina */
 body {
     background-color: #f4f6f8;
     color: #222;
     min-height: 100vh;
 }
 
-/* NavBar */
+/* ==============================
+   🔝 NAVBAR
+   ============================== */
+
+/* Contenitore della barra di navigazione */
 nav {
     display: flex;
     justify-content: center;
@@ -27,7 +36,7 @@ nav {
     border-bottom: 1px solid #e5e7eb;
 }
 
-/* Link base */
+/* Stile base dei link nella navbar */
 nav a {
     text-decoration: none;
     color: #444;
@@ -37,7 +46,7 @@ nav a {
     transition: all 0.2s ease-in-out;
 }
 
-/* Hover + active state */
+/* Effetto hover e stato attivo dei link */
 nav a:hover {
     background-color: #f1f5f9;
     color: #111;
@@ -48,7 +57,11 @@ nav a.active {
     color: white;
 }
 
-/* Container generale */
+/* ==============================
+   🧱 STRUTTURA GENERALE
+   ============================== */
+
+/* Contenitore principale della pagina */
 main {
     max-width: 800px;
     margin: 2rem auto;
@@ -66,6 +79,10 @@ h3 {
     margin-bottom: 1rem;
 }
 
+/* ==============================
+   🔘 BOTTONI
+   ============================== */
+
 /* Bottoni generici */
 button {
     background-color: #2563eb;
@@ -78,6 +95,89 @@ button {
     transition: background-color 0.2s ease;
 }
 
+/* Effetto hover dei pulsanti */
 button:hover {
     background-color: #1e40af;
+}
+
+/* ==============================
+   📋 TABELLA DEI TASK
+   ============================== */
+
+/* Struttura principale della tabella */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+    background-color: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Intestazione della tabella */
+thead {
+    background-color: #2563eb;
+    text-decoration-color: white;
+    text-align: left;
+}
+
+/* Celle dell’intestazione */
+thead th {
+    padding: 1rem;
+    color: #ffffff;
+    border-bottom: 2px solid #1e293b;
+    letter-spacing: 0.3px;
+}
+
+/* Celle del corpo della tabella */
+tbody td {
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    color: #334155;
+    font-size: 0.95rem;
+}
+
+/* Alternanza colori tra righe */
+tbody tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+/* Effetto hover sulle righe */
+tbody tr:hover {
+    background-color: #f1f5f9;
+    transition: background-color 0.2s ease-in-out;
+}
+
+/* Stato dei task */
+td.todo span,
+td.doing span,
+td.done span {
+    display: inline-block;
+    padding: 0.3rem 0.6rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+/* Colori per ciascuno stato */
+td.todo span {
+    background-color: #fee2e2;
+    /* rosso chiaro */
+    color: #b91c1c;
+    /* rosso scuro */
+}
+
+td.doing span {
+    background-color: #fef9c3;
+    /* giallo chiaro */
+    color: #92400e;
+    /* giallo scuro */
+}
+
+td.done span {
+    background-color: #dcfce7;
+    /* verde chiaro */
+    color: #166534;
+    /* verde scuro */
 }

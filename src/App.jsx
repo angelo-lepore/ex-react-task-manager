@@ -29,5 +29,5 @@ function App() {
   );
 }
 
-// Esportazione del componente principale dell’app
+// Export del componente principale dell’app
 export default App;
