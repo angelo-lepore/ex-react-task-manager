@@ -22,11 +22,12 @@ export default function TaskList() {
               <th>Nome</th>
               <th>Stato</th>
               <th>Data di Creazione</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             {tasks.map((task) => (
-              <TaskRow key={task.id} tasks={task} />
+              <TaskRow key={task.id} task={task} />
             ))}
           </tbody>
         </table>

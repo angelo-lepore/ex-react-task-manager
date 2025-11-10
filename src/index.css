@@ -229,3 +229,47 @@ select:focus {
     font-size: 0.9rem;
     margin-top: -0.2rem;
 }
+
+/* ==============================
+   📝 DETTAGLIO TASK
+   ============================== */
+
+.task-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+/* Blocchi dei dettagli */
+.task-info p {
+    background-color: #f9fafb;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    color: #334155;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Stato del task */
+.task-info p strong {
+    margin-right: 0.3rem;
+}
+
+/* Bottone Elimina Task */
+.task-info button {
+    margin-top: 1rem;
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.task-info button:hover {
+    background-color: #b91c1c;
+}
