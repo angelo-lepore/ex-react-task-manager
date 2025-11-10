@@ -118,14 +118,13 @@ table {
 /* Intestazione della tabella */
 thead {
     background-color: #2563eb;
-    text-decoration-color: white;
+    color: white;
     text-align: left;
 }
 
 /* Celle dell’intestazione */
 thead th {
     padding: 1rem;
-    color: #ffffff;
     border-bottom: 2px solid #1e293b;
     letter-spacing: 0.3px;
 }
@@ -180,4 +179,53 @@ td.done span {
     /* verde chiaro */
     color: #166534;
     /* verde scuro */
+}
+
+/* ==============================
+   ➕ FORM AGGIUNTA TASK
+   ============================== */
+
+/* Struttura del form */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+label {
+    font-weight: 500;
+    color: #1e293b;
+}
+
+/* Campi input, textarea, select */
+input,
+textarea,
+select {
+    padding: 0.6rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+/* Messaggio di errore */
+.error-message {
+    color: #b91c1c;
+    font-size: 0.9rem;
+    margin-top: -0.2rem;
 }
