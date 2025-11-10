@@ -1,8 +1,12 @@
 // Import delle funzioni necessarie da React
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
+
+// Import del contesto globale
+import { GlobalContext } from "../contexts/GlobalContext.jsx";
 
 // Componente che mostra la pagina per aggiungere un nuovo task
 export default function AddTask() {
+  const { addTask } = useContext(GlobalContext);
   const [title, setTitle] = useState("");
   const [error, setError] = useState("");
   const descriptionRef = useRef();
@@ -10,7 +14,7 @@ export default function AddTask() {
 
   const symbols = "!@#$%^&*()-_=+[]{}|;:'\\\",.<>?/`~";
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
@@ -26,18 +30,21 @@ export default function AddTask() {
     }
 
     // Costruzione oggetto task
-    const task = {
+    const newTask = {
       title: title.trim(),
       description: descriptionRef.current.value.trim(),
       status: statusRef.current.value,
     };
 
-    console.log("Nuovo task:", task);
-
-    // Resetta i campi del form
-    setTitle("");
-    descriptionRef.current.value = "";
-    statusRef.current.value = "To do";
+    try {
+      await addTask(newTask);
+      alert("Task aggiunto con successo!");
+      setTitle("");
+      descriptionRef.current.value = "";
+      statusRef.current.value = "To do";
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   return (
