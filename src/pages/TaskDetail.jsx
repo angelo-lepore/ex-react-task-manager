@@ -1,12 +1,13 @@
 // Import di React e dei hook necessari
 import { useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../contexts/GlobalContext";
 
 // Componente che mostra la pagina di dettaglio di un task
 export default function TaskDetail() {
   const { id } = useParams();
-  const { tasks } = useContext(GlobalContext);
+  const navigate = useNavigate();
+  const { tasks, removeTask } = useContext(GlobalContext);
   const task = tasks.find((t) => t.id === parseInt(id));
   if (!task) {
     return (
@@ -19,8 +20,15 @@ export default function TaskDetail() {
     );
   }
 
-  const removeTask = () => {
-    console.log(`Eliminare il task con ID: ${task.id}`);
+  const handleDelete = async () => {
+    try {
+      await removeTask(task.id);
+      alert("Task eliminata con successo!");
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+      alert(error.message);
+    }
   };
 
   return (
@@ -42,7 +50,7 @@ export default function TaskDetail() {
             <strong>Creato il:</strong>
             {new Date(task.createdAt).toLocaleDateString()}
           </p>
-          <button onClick={removeTask}>Elimina Task</button>
+          <button onClick={handleDelete}>Elimina Task</button>
         </div>
       </div>
     </main>

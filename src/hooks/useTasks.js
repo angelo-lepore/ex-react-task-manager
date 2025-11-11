@@ -28,8 +28,13 @@ function useTasks() {
   };
 
   // Funzione per rimuovere un task esistente
-  const removeTask = () => {
-    // (da implementare)
+  const removeTask = async (taskid) => {
+    const response = await fetch(`${VITE_API_URL}/tasks/${taskid}`, {
+      method: "DELETE",
+    });
+    const { success, message } = await response.json();
+    if (!success) throw new Error(message);
+    setTasks((prev) => prev.filter((t) => t.id !== taskid));
   };
 
   // Funzione per aggiornare un task esistente
