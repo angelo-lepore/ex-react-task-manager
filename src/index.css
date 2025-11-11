@@ -21,14 +21,13 @@ body {
    🔝 NAVBAR
    ============================== */
 
-/* Contenitore della barra di navigazione */
 nav {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 1.5rem;
     padding: 1rem 2rem;
-    background-color: #ffffff;
+    background-color: #fff;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     position: sticky;
     top: 0;
@@ -36,7 +35,6 @@ nav {
     border-bottom: 1px solid #e5e7eb;
 }
 
-/* Stile base dei link nella navbar */
 nav a {
     text-decoration: none;
     color: #444;
@@ -46,7 +44,6 @@ nav a {
     transition: all 0.2s ease-in-out;
 }
 
-/* Effetto hover e stato attivo dei link */
 nav a:hover {
     background-color: #f1f5f9;
     color: #111;
@@ -54,24 +51,22 @@ nav a:hover {
 
 nav a.active {
     background-color: #2563eb;
-    color: white;
+    color: #fff;
 }
 
 /* ==============================
    🧱 STRUTTURA GENERALE
    ============================== */
 
-/* Contenitore principale della pagina */
 main {
     max-width: 800px;
     margin: 2rem auto;
     padding: 1.5rem;
-    background-color: #ffffff;
+    background-color: #fff;
     border-radius: 16px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-/* Titoli e testi */
 h1,
 h2,
 h3 {
@@ -83,10 +78,9 @@ h3 {
    🔘 BOTTONI
    ============================== */
 
-/* Bottoni generici */
 button {
     background-color: #2563eb;
-    color: white;
+    color: #fff;
     border: none;
     padding: 0.6rem 1.2rem;
     border-radius: 8px;
@@ -95,7 +89,6 @@ button {
     transition: background-color 0.2s ease;
 }
 
-/* Effetto hover dei pulsanti */
 button:hover {
     background-color: #1e40af;
 }
@@ -104,32 +97,28 @@ button:hover {
    📋 TABELLA DEI TASK
    ============================== */
 
-/* Struttura principale della tabella */
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 1.5rem;
-    background-color: #ffffff;
+    background-color: #fff;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-/* Intestazione della tabella */
 thead {
     background-color: #2563eb;
-    color: white;
+    color: #fff;
     text-align: left;
 }
 
-/* Celle dell’intestazione */
 thead th {
     padding: 1rem;
     border-bottom: 2px solid #1e293b;
     letter-spacing: 0.3px;
 }
 
-/* Celle del corpo della tabella */
 tbody td {
     padding: 0.9rem 1rem;
     border-bottom: 1px solid #e2e8f0;
@@ -137,18 +126,15 @@ tbody td {
     font-size: 0.95rem;
 }
 
-/* Alternanza colori tra righe */
 tbody tr:nth-child(even) {
     background-color: #f9fafb;
 }
 
-/* Effetto hover sulle righe */
 tbody tr:hover {
     background-color: #f1f5f9;
     transition: background-color 0.2s ease-in-out;
 }
 
-/* Stato dei task */
 td.todo span,
 td.doing span,
 td.done span {
@@ -159,34 +145,27 @@ td.done span {
     font-size: 0.85rem;
 }
 
-/* Colori per ciascuno stato */
 td.todo span {
     background-color: #fee2e2;
-    /* rosso chiaro */
     color: #b91c1c;
-    /* rosso scuro */
 }
 
 td.doing span {
     background-color: #fef9c3;
-    /* giallo chiaro */
     color: #92400e;
-    /* giallo scuro */
 }
 
 td.done span {
     background-color: #dcfce7;
-    /* verde chiaro */
     color: #166534;
-    /* verde scuro */
 }
 
 /* ==============================
    ➕ FORM AGGIUNTA TASK
    ============================== */
 
-/* Struttura del form */
-form {
+form,
+.edit-task-form {
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -199,16 +178,23 @@ form {
     gap: 0.4rem;
 }
 
-label {
+label,
+.edit-task-form label {
+    display: flex;
+    flex-direction: column;
     font-weight: 500;
     color: #1e293b;
+    font-size: 0.95rem;
+    gap: 0.25rem;
 }
 
-/* Campi input, textarea, select */
 input,
 textarea,
-select {
-    padding: 0.6rem;
+select,
+.edit-task-form input,
+.edit-task-form textarea,
+.edit-task-form select {
+    padding: 0.5rem 0.6rem;
     border: 1px solid #d1d5db;
     border-radius: 8px;
     font-size: 1rem;
@@ -218,12 +204,19 @@ select {
 
 input:focus,
 textarea:focus,
-select:focus {
+select:focus,
+.edit-task-form input:focus,
+.edit-task-form textarea:focus,
+.edit-task-form select:focus {
     border-color: #2563eb;
     box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
 }
 
-/* Messaggio di errore */
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
 .error-message {
     color: #b91c1c;
     font-size: 0.9rem;
@@ -241,7 +234,6 @@ select:focus {
     padding: 1rem;
 }
 
-/* Blocchi dei dettagli */
 .task-info p {
     background-color: #f9fafb;
     padding: 0.8rem 1rem;
@@ -252,16 +244,14 @@ select:focus {
     line-height: 1.5;
 }
 
-/* Stato del task */
 .task-info p strong {
     margin-right: 0.3rem;
 }
 
-/* Bottone Elimina Task */
 .task-info button {
     margin-top: 1rem;
     background-color: #ef4444;
-    color: white;
+    color: #fff;
     border: none;
     padding: 0.6rem 1.2rem;
     border-radius: 8px;
@@ -278,7 +268,6 @@ select:focus {
    🪟 MODALE CENTRATA
    ============================== */
 
-/* Overlay scuro */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -286,16 +275,14 @@ select:focus {
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.4);
-    /* sfondo semi-trasparente */
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
 }
 
-/* Contenitore della modale */
 .modal {
-    background-color: #ffffff;
+    background-color: #fff;
     border-radius: 12px;
     padding: 1.5rem;
     width: 90%;
@@ -304,28 +291,25 @@ select:focus {
     text-align: center;
 }
 
-/* Titolo della modale */
 .modal h2 {
     font-size: 1.4rem;
     font-weight: 600;
     margin-bottom: 1rem;
 }
 
-/* Testo della modale */
 .modal p {
     font-size: 1rem;
     margin-bottom: 1.5rem;
     color: #1f2937;
 }
 
-/* Contenitore bottoni */
 .modal-buttons {
     display: flex;
     justify-content: center;
     gap: 1rem;
+    margin-top: 1rem;
 }
 
-/* Bottone Annulla */
 .modal-buttons button:first-child {
     padding: 0.5rem 1rem;
     border-radius: 8px;
@@ -339,13 +323,12 @@ select:focus {
     background-color: #d1d5db;
 }
 
-/* Bottone Conferma */
 .modal-buttons button:last-child {
     padding: 0.5rem 1rem;
     border-radius: 8px;
     border: none;
     background-color: #ef4444;
-    color: white;
+    color: #fff;
     cursor: pointer;
 }
 

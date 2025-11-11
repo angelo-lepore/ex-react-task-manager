@@ -38,8 +38,17 @@ function useTasks() {
   };
 
   // Funzione per aggiornare un task esistente
-  const updateTask = () => {
-    // (da implementare)
+  const updateTask = async (updateTask) => {
+    const response = await fetch(`${VITE_API_URL}/tasks/${updateTask.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updateTask),
+    });
+    const { success, message, task: newTask } = await response.json();
+    if (!success) throw new Error(message);
+    setTasks((prev) =>
+      prev.map((oldTask) => (oldTask.id === newTask.id ? newTask : oldTask))
+    );
   };
 
   return { tasks, addTask, removeTask, updateTask };

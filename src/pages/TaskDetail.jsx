@@ -4,14 +4,16 @@ import { useParams, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../contexts/GlobalContext";
 
 import Modal from "../components/Modal";
+import EditTaskModal from "../components/EditTaskModal";
 
 // Componente che mostra la pagina di dettaglio di un task
 export default function TaskDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { tasks, removeTask } = useContext(GlobalContext);
+  const { tasks, removeTask, updateTask } = useContext(GlobalContext);
   const task = tasks.find((t) => t.id === parseInt(id));
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   if (!task) {
     return (
       <main>
@@ -28,6 +30,16 @@ export default function TaskDetail() {
       await removeTask(task.id);
       alert("Task eliminata con successo!");
       navigate("/");
+    } catch (error) {
+      console.error(error);
+      alert(error.message);
+    }
+  };
+
+  const handleUpdated = async (updatedTask) => {
+    try {
+      await updateTask(updatedTask);
+      setShowEditModal(false);
     } catch (error) {
       console.error(error);
       alert(error.message);
@@ -54,7 +66,13 @@ export default function TaskDetail() {
             {new Date(task.createdAt).toLocaleDateString()}
           </p>
           <button onClick={() => setShowDeleteModal(true)}>Elimina Task</button>
-          {/* Modale */}
+          <button
+            onClick={() => setShowEditModal(true)}
+            style={{ marginLeft: "0.5rem", backgroundColor: "#2563eb" }}
+          >
+            Modifica Task
+          </button>
+          {/* Modale elimina task */}
           <Modal
             title="Conferma eliminazione"
             content="Sei sicuro di voler eliminare questo task? L'azione non può essere annullata."
@@ -62,6 +80,13 @@ export default function TaskDetail() {
             onClose={() => setShowDeleteModal(false)}
             onConfirm={handleDelete}
             confirmText="Elimina"
+          />
+          {/* Modale modifica task */}
+          <EditTaskModal
+            show={showEditModal}
+            onClose={() => setShowEditModal(false)}
+            task={task}
+            onSave={handleUpdated}
           />
         </div>
       </div>
