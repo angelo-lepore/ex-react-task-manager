@@ -1,7 +1,9 @@
 // Import di React e dei hook necessari
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../contexts/GlobalContext";
+
+import Modal from "../components/Modal";
 
 // Componente che mostra la pagina di dettaglio di un task
 export default function TaskDetail() {
@@ -9,6 +11,7 @@ export default function TaskDetail() {
   const navigate = useNavigate();
   const { tasks, removeTask } = useContext(GlobalContext);
   const task = tasks.find((t) => t.id === parseInt(id));
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   if (!task) {
     return (
       <main>
@@ -50,7 +53,16 @@ export default function TaskDetail() {
             <strong>Creato il:</strong>
             {new Date(task.createdAt).toLocaleDateString()}
           </p>
-          <button onClick={handleDelete}>Elimina Task</button>
+          <button onClick={() => setShowDeleteModal(true)}>Elimina Task</button>
+          {/* Modale */}
+          <Modal
+            title="Conferma eliminazione"
+            content="Sei sicuro di voler eliminare questo task? L'azione non può essere annullata."
+            show={showDeleteModal}
+            onClose={() => setShowDeleteModal(false)}
+            onConfirm={handleDelete}
+            confirmText="Elimina"
+          />
         </div>
       </div>
     </main>

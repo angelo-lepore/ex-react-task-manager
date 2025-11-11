@@ -273,3 +273,82 @@ select:focus {
 .task-info button:hover {
     background-color: #b91c1c;
 }
+
+/* ==============================
+   🪟 MODALE CENTRATA
+   ============================== */
+
+/* Overlay scuro */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    /* sfondo semi-trasparente */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+/* Contenitore della modale */
+.modal {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+/* Titolo della modale */
+.modal h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+/* Testo della modale */
+.modal p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    color: #1f2937;
+}
+
+/* Contenitore bottoni */
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+/* Bottone Annulla */
+.modal-buttons button:first-child {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: none;
+    background-color: #e5e7eb;
+    color: #1f2937;
+    cursor: pointer;
+}
+
+.modal-buttons button:first-child:hover {
+    background-color: #d1d5db;
+}
+
+/* Bottone Conferma */
+.modal-buttons button:last-child {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: none;
+    background-color: #ef4444;
+    color: white;
+    cursor: pointer;
+}
+
+.modal-buttons button:last-child:hover {
+    background-color: #b91c1c;
+}
