@@ -5,7 +5,7 @@ import { GlobalContext } from "../contexts/GlobalContext";
 import Modal from "../components/Modal";
 
 // Componente che rappresenta una singola riga della tabella
-const TaskRow = memo(({ task }) => {
+const TaskRow = memo(({ task, checked, onToggle }) => {
   const navigate = useNavigate();
   const { removeTask } = useContext(GlobalContext);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -25,6 +25,13 @@ const TaskRow = memo(({ task }) => {
   return (
     <>
       <tr>
+        <td>
+          <input
+            type="checkbox"
+            checked={checked}
+            onChange={() => onToggle(task.id)}
+          />
+        </td>
         <td>
           <Link
             to={`/task/${task.id}`}

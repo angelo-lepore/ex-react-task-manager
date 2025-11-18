@@ -20,13 +20,35 @@ function debounce(callback, delay) {
 
 // Componente che mostra la lista dei task
 export default function TaskList() {
-  const { tasks } = useContext(GlobalContext);
+  const { tasks, removeMultipleTasks } = useContext(GlobalContext);
   console.log("Task:", tasks);
   const [sortBy, setSortBy] = useState("createdAt");
   const [sortOrder, setSortOrder] = useState(1);
   const sortArrow = sortOrder === 1 ? "↓" : "↑";
   const [searchQuery, setSearchQuery] = useState("");
   const debouncesearchQuery = useCallback(debounce(setSearchQuery, 500), []);
+  const [selectedTaskIds, setSelectedTaskIds] = useState([]);
+
+  // Funzione per gestire l'eliminazione di più task
+  const handleDeleteSelected = async () => {
+    try {
+      await removeMultipleTasks(selectedTaskIds);
+      alert("Task eliminate con successo!");
+      setSelectedTaskIds([]);
+    } catch (error) {
+      console.error(error);
+      alert(error.message);
+    }
+  };
+
+  // Funzione per gestire la selezione delle task
+  const toggleSelection = (taskId) => {
+    if (selectedTaskIds.includes(taskId)) {
+      setSelectedTaskIds((prev) => prev.filter((id) => id !== taskId));
+    } else {
+      setSelectedTaskIds((prev) => [...prev, taskId]);
+    }
+  };
 
   // Funzione per gestire il cambio di ordinamento
   const handleSort = (field) => {
@@ -75,6 +97,7 @@ export default function TaskList() {
         <table>
           <thead>
             <tr>
+              <th></th>
               <th onClick={() => handleSort("title")}>
                 Nome {sortBy === "title" && sortArrow}
               </th>
@@ -89,10 +112,29 @@ export default function TaskList() {
           </thead>
           <tbody>
             {filteredSortedTasks.map((task) => (
-              <TaskRow key={task.id} task={task} />
+              <TaskRow
+                key={task.id}
+                task={task}
+                checked={selectedTaskIds.includes(task.id)}
+                onToggle={toggleSelection}
+              />
             ))}
           </tbody>
         </table>
+        {selectedTaskIds.length > 0 && (
+          <button
+            style={{
+              backgroundColor: "#ef4444",
+              marginTop: "10px",
+              borderRadius: "8px",
+              color: "white",
+              border: "none",
+            }}
+            onClick={handleDeleteSelected}
+          >
+            Elimina Selezionate
+          </button>
+        )}
       </div>
     </main>
   );

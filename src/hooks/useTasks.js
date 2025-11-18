@@ -28,17 +28,48 @@ function useTasks() {
   };
 
   // Funzione per rimuovere un task esistente
-  const removeTask = async (taskid) => {
-    const response = await fetch(`${VITE_API_URL}/tasks/${taskid}`, {
+  const removeTask = async (taskId) => {
+    const response = await fetch(`${VITE_API_URL}/tasks/${taskId}`, {
       method: "DELETE",
     });
     const { success, message } = await response.json();
     if (!success) throw new Error(message);
-    setTasks((prev) => prev.filter((t) => t.id !== taskid));
+    setTasks((prev) => prev.filter((t) => t.id !== taskId));
+  };
+
+  // Funzione per rimuovere più task
+  const removeMultipleTasks = async (taskIds) => {
+    const deleteRequests = taskIds.map((taskId) =>
+      fetch(`${VITE_API_URL}/tasks/${taskId}`, { method: "DELETE" }).then(
+        (res) => res.json()
+      )
+    );
+    const results = await Promise.allSettled(deleteRequests);
+    const fullfilledDeletions = [];
+    const rejectedDeletions = [];
+    results.forEach((result, index) => {
+      if (result.status === "fulfilled" && result.value.success) {
+        fullfilledDeletions.push(taskIds[index]);
+      } else {
+        rejectedDeletions.push(taskIds[index]);
+      }
+      if (fullfilledDeletions.length > 0) {
+        setTasks((prev) =>
+          prev.filter((t) => !fullfilledDeletions.includes(t.id))
+        );
+      }
+      if (rejectedDeletions.length > 0) {
+        alert(
+          `Non è stato possibile eliminare i task con ID: ${rejectedDeletions.join(
+            ", "
+          )}`
+        );
+      }
+    });
   };
 
   // Funzione per aggiornare un task esistente
-  const updateTask = async (updateTask) => {
+  async function updateTask(updateTask) {
     const response = await fetch(`${VITE_API_URL}/tasks/${updateTask.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -49,9 +80,9 @@ function useTasks() {
     setTasks((prev) =>
       prev.map((oldTask) => (oldTask.id === newTask.id ? newTask : oldTask))
     );
-  };
+  }
 
-  return { tasks, addTask, removeTask, updateTask };
+  return { tasks, addTask, removeTask, updateTask, removeMultipleTasks };
 }
 
 // Export dell’hook personalizzato
