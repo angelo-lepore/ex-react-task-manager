@@ -1,22 +1,30 @@
 // Import delle funzioni necessarie da React
-import { useState, useEffect } from "react";
+import { useEffect, useReducer } from "react";
+import tasksReducer from "../reducers/tasksReducer";
 
 // Recupero della variabile d’ambiente definita in .env
 const { VITE_API_URL } = import.meta.env;
 
 // Hook personalizzato per gestire i task
 function useTasks() {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, dispatchTasks] = useReducer(tasksReducer, []);
 
   useEffect(() => {
     fetch(`${VITE_API_URL}/tasks`)
       .then((res) => res.json())
-      .then((data) => setTasks(data))
+      .then((data) => dispatchTasks({ type: "LOAD_TASKS", payload: data }))
       .catch((error) => console.error(error));
   }, []);
 
   // Funzione per aggiungere un nuovo task
   const addTask = async (newTask) => {
+    const taskExists = tasks.some(
+      (task) =>
+        task.title.trim().toLowerCase() === newTask.title.trim().toLowerCase()
+    );
+    if (taskExists) {
+      throw new Error("Un task con questo titolo esiste già.");
+    }
     const response = await fetch(`${VITE_API_URL}/tasks`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -24,7 +32,7 @@ function useTasks() {
     });
     const { success, message, task } = await response.json();
     if (!success) throw new Error(message);
-    setTasks((prev) => [...prev, task]);
+    dispatchTasks({ type: "ADD_TASK", payload: task });
   };
 
   // Funzione per rimuovere un task esistente
@@ -34,7 +42,7 @@ function useTasks() {
     });
     const { success, message } = await response.json();
     if (!success) throw new Error(message);
-    setTasks((prev) => prev.filter((t) => t.id !== taskId));
+    dispatchTasks({ type: "REMOVE_TASK", payload: taskId });
   };
 
   // Funzione per rimuovere più task
@@ -54,9 +62,10 @@ function useTasks() {
         rejectedDeletions.push(taskIds[index]);
       }
       if (fullfilledDeletions.length > 0) {
-        setTasks((prev) =>
-          prev.filter((t) => !fullfilledDeletions.includes(t.id))
-        );
+        dispatchTasks({
+          type: "REMOVE_MULTIPLE_TASKS",
+          payload: fullfilledDeletions,
+        });
       }
       if (rejectedDeletions.length > 0) {
         alert(
@@ -69,18 +78,23 @@ function useTasks() {
   };
 
   // Funzione per aggiornare un task esistente
-  async function updateTask(updateTask) {
-    const response = await fetch(`${VITE_API_URL}/tasks/${updateTask.id}`, {
+  const updateTask = async (updatedTask) => {
+    const taskWithSameTitle = tasks.find(
+      (task) => task.title.toLowerCase() === updatedTask.title.toLowerCase()
+    );
+    if (taskWithSameTitle && taskWithSameTitle.id !== updatedTask.id) {
+      throw new Error("Un task con questo titolo esiste già.");
+    }
+
+    const response = await fetch(`${VITE_API_URL}/tasks/${updatedTask.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updateTask),
+      body: JSON.stringify(updatedTask),
     });
     const { success, message, task: newTask } = await response.json();
     if (!success) throw new Error(message);
-    setTasks((prev) =>
-      prev.map((oldTask) => (oldTask.id === newTask.id ? newTask : oldTask))
-    );
-  }
+    dispatchTasks({ type: "UPDATE_TASK", payload: newTask });
+  };
 
   return { tasks, addTask, removeTask, updateTask, removeMultipleTasks };
 }

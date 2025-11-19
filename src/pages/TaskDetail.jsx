@@ -2,6 +2,7 @@
 import { useContext, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../contexts/GlobalContext";
+import dayjs from "dayjs";
 
 import Modal from "../components/Modal";
 import EditTaskModal from "../components/EditTaskModal";
@@ -63,7 +64,7 @@ export default function TaskDetail() {
           </p>
           <p>
             <strong>Creato il:</strong>
-            {new Date(task.createdAt).toLocaleDateString()}
+            {dayjs(task.createdAt).format("DD/MM/YYYY")}
           </p>
           <button onClick={() => setShowDeleteModal(true)}>Elimina Task</button>
           <button

@@ -3,6 +3,7 @@ import { memo, useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../contexts/GlobalContext";
 import Modal from "../components/Modal";
+import dayjs from "dayjs";
 
 // Componente che rappresenta una singola riga della tabella
 const TaskRow = memo(({ task, checked, onToggle }) => {
@@ -47,7 +48,7 @@ const TaskRow = memo(({ task, checked, onToggle }) => {
         <td className={statusName}>
           <span>{task.status}</span>
         </td>
-        <td>{new Date(task.createdAt).toLocaleDateString()}</td>
+        <td>{dayjs(task.createdAt).format("DD/MM/YYYY")}</td>
         <td>
           <i
             className="fa-solid fa-trash-can"
